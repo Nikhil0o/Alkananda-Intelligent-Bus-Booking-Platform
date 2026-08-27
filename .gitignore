@@ -1,0 +1,43 @@
+# IntelliJ IDEA
+.idea/
+**/.idea/
+
+# Gradle
+.gradle/
+**/.gradle/
+
+# Gradle build output
+build/
+**/build/
+
+# Compiled Java files
+*.class
+
+# Maven
+target/
+**/target/
+
+# Environment / secrets
+.env
+**/.env
+
+# Local Spring configuration
+application-local.properties
+**/application-local.properties
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IntelliJ
+*.iml
+**/*.iml
