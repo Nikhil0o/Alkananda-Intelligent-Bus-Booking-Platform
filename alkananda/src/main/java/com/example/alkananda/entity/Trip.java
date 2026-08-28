@@ -22,20 +22,18 @@ public class Trip {
     @NotNull(message = "Bus is required")
     private Bus bus;
 
+
+
     @ManyToOne
     @JoinColumn(name = "route_id", nullable = false)
-
-    @NotBlank(message = "Route is required")
     private Route route;
 
-    @NotNull(message = "Travel date is required")
+
     @FutureOrPresent(message = "Travel date cannot be in the past")
     private LocalDate travelDate;
 
-    @NotBlank(message = "Departuretime is required")
     private LocalTime departureTime;
 
-    @NotBlank(message = "Arrival time required")
     private LocalTime arrivalTime;
 
     @DecimalMin(value = "0.0", inclusive = false,

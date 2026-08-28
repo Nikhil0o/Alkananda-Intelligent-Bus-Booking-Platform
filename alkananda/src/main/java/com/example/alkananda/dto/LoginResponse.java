@@ -8,7 +8,7 @@ public class LoginResponse {
     private String email;
     private Role role;
 
-    public LoginResponse(String token, String email, Role role) {
+    public LoginResponse(String token, String email, Role role, Role userRole) {
         this.token = token;
         this.email = email;
         this.role = role;

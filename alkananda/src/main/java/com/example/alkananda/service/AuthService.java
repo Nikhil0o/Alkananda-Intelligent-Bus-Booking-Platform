@@ -29,10 +29,9 @@ public class AuthService {
             throw new ResourceNotFoundException("Invalid email or password");
         }
         String token =jwtService.generateToken(user.getEmail());
-        System.out.println("========== NEW TOKEN ==========");
-        System.out.println(token);
+
         return new LoginResponse(
-                token,user.getEmail(),user.getRole()
+                token,user.getEmail(),user.getRole(),user.getRole()
         );
     }
 }
