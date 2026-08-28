@@ -12,7 +12,7 @@ import java.util.Date;
 public class JwtService {
 
     private final String SECRET =
-            "AlkanandaBusServiceSecretKey12345678901234567890";
+            "Secret";
 
     private final SecretKey key =
             Keys.hmacShaKeyFor(
