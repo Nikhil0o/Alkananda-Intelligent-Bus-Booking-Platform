@@ -144,24 +144,31 @@ The profile page also provides quick navigation to:
 
 ---
 
-### 📊 Analytics
+## 📊 Analytics
 
-The platform includes an analytics service for analyzing booking data.
+The platform includes a separate analytics service for analyzing booking data.
 
-Planned/implemented analytics include:
+Analytics capabilities include:
 
 - Booking analytics
 - Revenue analytics
 - Route performance analysis
 - Seat occupancy analysis
 - Booking trends
-- Popular routes
+- Popular route analysis
 
-Analytics services are separated from the core booking application to support scalability.
+The analytics service is separated from the core booking application to support scalability and independent data processing.
+
+### Analytics Technology
+
+- Python
+- FastAPI
+- Pandas
+- MySQL
 
 ---
 
-### 🤖 Machine Learning
+## 🤖 Machine Learning
 
 Machine Learning is integrated into the platform for intelligent analytics and prediction.
 
@@ -173,11 +180,13 @@ Potential applications include:
 - Route performance prediction
 - Data-driven travel insights
 
+The ML layer can be extended independently as the amount of booking and travel data increases.
+
 ---
 
-### 🧠 AI Assistance
+## 🧠 AI Assistance
 
-Alkananda is designed to include AI-powered travel assistance.
+Alkananda is designed to support AI-powered travel assistance.
 
 The AI assistant can help users:
 
@@ -185,6 +194,8 @@ The AI assistant can help users:
 - Interact naturally with the platform
 - Get travel-related assistance
 - Improve the overall booking experience
+
+The AI layer is designed as an independent service so that it can be enhanced without changing the core booking system.
 
 ---
 
@@ -201,131 +212,28 @@ The frontend is built using:
 ### Frontend User Flow
 
 ```text
-Login
-  │
-  ▼
-User Dashboard
-  │
-  ├── Search Trip
-  │      │
-  │      ▼
-  │   Search Results
-  │      │
-  │      ▼
-  │   Seat Selection
-  │      │
-  │      ▼
-  │   Booking Confirmation
-  │      │
-  │      ▼
-  │   Booking Success
-  │
-  ├── My Bookings
-  │      │
-  │      └── Cancel Booking
-  │
-  └── Profile
-         │
-         └── Logout
-### Authentication Flow
-User Login
-     │
-     ▼
-Spring Security
-     │
-     ▼
-AuthenticationManager
-     │
-     ▼
-User Verification
-     │
-     ▼
-BCrypt Password Validation
-     │
-     ▼
-JWT Token Generation
-     │
-     ▼
-Frontend Stores Token
-     │
-     ▼
-JWT Authentication Filter
-     │
-     ▼
-Protected REST APIs
-### System Architecture
-                         ┌──────────────────────────┐
-                         │      React Frontend      │
-                         │                          │
-                         │  Login                   │
-                         │  Registration             │
-                         │  Dashboard               │
-                         │  Trip Search             │
-                         │  Search Results          │
-                         │  Seat Selection          │
-                         │  Booking                 │
-                         │  My Bookings             │
-                         │  User Profile            │
-                         └────────────┬─────────────┘
-                                      │
-                                      │ REST API
-                                      ▼
-                         ┌──────────────────────────┐
-                         │     Spring Boot API      │
-                         │                          │
-                         │ Controllers              │
-                         │ Services                 │
-                         │ Repositories             │
-                         │ Spring Security          │
-                         │ JWT Authentication       │
-                         └────────────┬─────────────┘
-                                      │
-                                      │ JPA / Hibernate
-                                      ▼
-                         ┌──────────────────────────┐
-                         │      MySQL Database      │
-                         │                          │
-                         │ Users                    │
-                         │ Buses                    │
-                         │ Routes                   │
-                         │ Trips                    │
-                         │ Seats                    │
-                         │ Bookings                 │
-                         └────────────┬─────────────┘
-                                      │
-                         ┌────────────┴────────────┐
-                         │                         │
-                         ▼                         ▼
-                ┌──────────────────┐      ┌──────────────────┐
-                │ Analytics / ML   │      │ AI Assistance    │
-                │ Service          │      │ Service          │
-                │                  │      │                  │
-                │ FastAPI          │      │ Intelligent      │
-                │ Python           │      │ Travel Assistant │
-                │ Pandas           │      │                  │
-                └──────────────────┘      └──────────────────┘
-### Backend Architecture
-                Controller
-                    │
-                    ▼
-                 Service
-                    │
-                    ▼
-                Repository
-                    │
-                    ▼
-              MySQL Database
-###Main Entities
-User
-  │
-  ├────────────── Booking
-  │                  │
-  │                  ├── Trip
-  │                  │    │
-  │                  │    └── Route
-  │                  │
-  │                  ├── Seat
-  │                  │
-  │                  └── Bus
-  │
-  └── Role
+                         ┌──────────────┐
+                         │    Login     │
+                         └──────┬───────┘
+                                │
+                                ▼
+                    ┌──────────────────────┐
+                    │   User Dashboard     │
+                    └──────────┬───────────┘
+                               │
+             ┌─────────────────┼─────────────────┐
+             │                 │                 │
+             ▼                 ▼                 ▼
+       Search Trip        My Bookings         Profile
+             │                 │                 │
+             ▼                 ▼                 ▼
+      Search Results     Booking History      User Info
+             │                 │                 │
+             ▼                 ▼                 ▼
+      Seat Selection     Cancel Booking       Logout
+             │
+             ▼
+    Booking Confirmation
+             │
+             ▼
+       Booking Success
