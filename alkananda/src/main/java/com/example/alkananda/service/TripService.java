@@ -66,8 +66,9 @@ public class TripService {
             String source,
             String destination,
             LocalDate date,
-            int page,int size
-            ) {
+            int page,
+            int size
+    ) {
 
         Pageable pageable = PageRequest.of(page, size);
 
@@ -77,19 +78,39 @@ public class TripService {
                 date,
                 pageable
         );
-        return trips.map(trip -> new TripResponse(
-                trip.getId(),
-                trip.getBus().getId(),
-                trip.getBus().getBusNumber(),
-                trip.getRoute().getId(),
-                trip.getRoute().getSource(),
-                trip.getRoute().getDestination(),
-                trip.getTravelDate(),
-                trip.getDepartureTime(),
-                trip.getArrivalTime(),
-                trip.getFare()
 
-        ));
+        return trips.map(trip -> {
+
+            long totalSeats = seatRepository.countByTripIdAndStatus(
+                    trip.getId(),
+                    SeatStatus.AVAILABLE
+            );
+
+            long bookedSeats = seatRepository.countByTripIdAndStatus(
+                    trip.getId(),
+                    SeatStatus.BOOKED
+            );
+
+            long availableSeats = totalSeats;
+
+            TripResponse response = new TripResponse(
+                    trip.getId(),
+                    trip.getBus().getId(),
+                    trip.getBus().getBusNumber(),
+                    trip.getRoute().getId(),
+                    trip.getRoute().getSource(),
+                    trip.getRoute().getDestination(),
+                    trip.getTravelDate(),
+                    trip.getDepartureTime(),
+                    trip.getArrivalTime(),
+                    trip.getFare()
+            );
+
+            response.setTotalSeats((int) (totalSeats + bookedSeats));
+            response.setAvailableSeats(availableSeats);
+
+            return response;
+        });
     }
     public Page<TripResponse> getTrips(int page, int size) {
 
@@ -97,19 +118,36 @@ public class TripService {
 
         Page<Trip> trips = tripRepository.findAll(pageable);
 
-        return trips.map(trip -> new TripResponse(
-                trip.getId(),
-                trip.getBus().getId(),
-                trip.getBus().getBusNumber(),
-                trip.getRoute().getId(),
-                trip.getRoute().getSource(),
-                trip.getRoute().getDestination(),
-                trip.getTravelDate(),
-                trip.getDepartureTime(),
-                trip.getArrivalTime(),
-                trip.getFare()
+        return trips.map(trip -> {
 
-        ));
+            long availableSeats = seatRepository.countByTripIdAndStatus(
+                    trip.getId(),
+                    SeatStatus.AVAILABLE
+            );
+
+            long bookedSeats = seatRepository.countByTripIdAndStatus(
+                    trip.getId(),
+                    SeatStatus.BOOKED
+            );
+
+            TripResponse response = new TripResponse(
+                    trip.getId(),
+                    trip.getBus().getId(),
+                    trip.getBus().getBusNumber(),
+                    trip.getRoute().getId(),
+                    trip.getRoute().getSource(),
+                    trip.getRoute().getDestination(),
+                    trip.getTravelDate(),
+                    trip.getDepartureTime(),
+                    trip.getArrivalTime(),
+                    trip.getFare()
+            );
+
+            response.setTotalSeats((int) (availableSeats + bookedSeats));
+            response.setAvailableSeats(availableSeats);
+
+            return response;
+        });
     }
 
 }

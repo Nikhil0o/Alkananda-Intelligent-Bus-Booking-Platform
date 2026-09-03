@@ -34,58 +34,144 @@ public class BookingService {
     }
 
     @Transactional
-    public BookingResponse bookSeat(BookingRequest request) {
+    public BookingResponse bookSeat(
+            BookingRequest request,
+            String email
+    ) {
 
-        try{
-            User user = userRepository.findById(request.getUserId())
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+        try {
 
+            // 1. Get the currently logged-in user
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(
+                            () -> new RuntimeException("User not found")
+                    );
+
+
+            // 2. Get trip
             Trip trip = tripRepository.findById(request.getTripId())
-                    .orElseThrow(() -> new RuntimeException("Trip not found"));
+                    .orElseThrow(
+                            () -> new RuntimeException("Trip not found")
+                    );
 
+
+            // 3. Get seat
             Seat seat = seatRepository.findById(request.getSeatId())
-                    .orElseThrow(() -> new RuntimeException("Seat not found"));
+                    .orElseThrow(
+                            () -> new RuntimeException("Seat not found")
+                    );
 
+
+            // 4. Check whether seat is already booked
             if (seat.getStatus() == SeatStatus.BOOKED) {
-                throw new RuntimeException("Seat already booked");
+
+                throw new RuntimeException(
+                        "Seat already booked"
+                );
             }
 
+
+            // 5. Make sure seat belongs to selected trip
             if (!seat.getTrip().getId().equals(trip.getId())) {
-                throw new RuntimeException("Seat does not belong to this trip");
+
+                throw new RuntimeException(
+                        "Seat does not belong to this trip"
+                );
             }
 
+
+            // 6. Mark seat as booked
             seat.setStatus(SeatStatus.BOOKED);
+
             seatRepository.save(seat);
 
+
+            // 7. Create booking
             Booking booking = new Booking();
 
             booking.setUser(user);
+
             booking.setTrip(trip);
+
             booking.setSeat(seat);
-            booking.setBookingTime(LocalDateTime.now());
-            booking.setAmount(trip.getFare());
 
-            Booking savedBooking = bookingRepository.save(booking);
-            BookingResponse response = new BookingResponse();
+            booking.setBookingTime(
+                    LocalDateTime.now()
+            );
 
-            response.setBookingId(savedBooking.getId());
-            response.setUserName(user.getName());
-            response.setSeatNumber(seat.getSeatNumber());
+            booking.setAmount(
+                    trip.getFare()
+            );
 
-            response.setSource(trip.getRoute().getSource());
-            response.setDestination(trip.getRoute().getDestination());
+            booking.setStatus(
+                    BookingStatus.CONFIRMED
+            );
 
-            response.setTravelDate(trip.getTravelDate());
-            response.setDepartureTime(trip.getDepartureTime());
-            response.setArrivalTime(trip.getArrivalTime());
 
-            response.setAmount(savedBooking.getAmount());
-            booking.setStatus(BookingStatus.CONFIRMED);
+            // 8. Save booking
+            Booking savedBooking =
+                    bookingRepository.save(booking);
 
-            response.setBookingTime(savedBooking.getBookingTime());
 
+            // 9. Create response
+            BookingResponse response =
+                    new BookingResponse();
+
+
+            response.setBookingId(
+                    savedBooking.getId()
+            );
+
+            response.setUserName(
+                    user.getName()
+            );
+
+            response.setSeatNumber(
+                    seat.getSeatNumber()
+            );
+
+
+            // 10. Route information
+            response.setSource(
+                    trip.getRoute().getSource()
+            );
+
+            response.setDestination(
+                    trip.getRoute().getDestination()
+            );
+
+
+            // 11. Trip information
+            response.setTravelDate(
+                    trip.getTravelDate()
+            );
+
+            response.setDepartureTime(
+                    trip.getDepartureTime()
+            );
+
+            response.setArrivalTime(
+                    trip.getArrivalTime()
+            );
+
+
+            // 12. Payment/booking amount
+            response.setAmount(
+                    savedBooking.getAmount()
+            );
+
+
+            // 13. Booking time
+            response.setBookingTime(
+                    savedBooking.getBookingTime()
+            );
+
+            response.setBus(savedBooking.getBus());
+            // 14. Return booking response
             return response;
-        }catch (OptimisticLockException e) {
+
+
+        } catch (OptimisticLockException e) {
 
             throw new ResourceNotFoundException(
                     "Seat was booked by another user. Please select another seat."
@@ -137,10 +223,13 @@ public class BookingService {
             response.setTravelDate(
                     booking.getTrip().getTravelDate()
             );
-
+            response.setBus(booking.getBus());
             response.setAmount(booking.getAmount());
             response.setStatus(booking.getStatus());
             response.setBookingTime(booking.getBookingTime());
+            response.setArrivalTime((booking.getTrip().getArrivalTime()));
+            response.setDepartureTime(booking.getTrip().getDepartureTime());
+            response.setBusNumber(booking.getTrip().getBus().getBusNumber());
 
             return response;
 

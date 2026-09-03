@@ -1,0 +1,380 @@
+* {
+  box-sizing: border-box;
+}
+
+.search-results-page {
+  min-height: 100vh;
+  background: #0b0f19;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+
+/* NAVBAR */
+
+.results-navbar {
+  height: 70px;
+  padding: 0 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #111827;
+  border-bottom: 1px solid #1f2937;
+}
+
+.results-logo {
+  font-size: 21px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.back-button {
+  background: transparent;
+  border: 1px solid #374151;
+  color: #d1d5db;
+
+  padding: 10px 16px;
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background: #1f2937;
+}
+
+
+/* CONTENT */
+
+.results-container {
+  max-width: 1100px;
+  margin: auto;
+
+  padding: 50px 30px;
+}
+
+
+/* HEADING */
+
+.results-heading {
+  margin-bottom: 35px;
+}
+
+.results-label {
+  color: #9ca3af;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+}
+
+.results-heading h1 {
+  margin: 8px 0;
+
+  font-size: 36px;
+}
+
+.results-heading p {
+  color: #9ca3af;
+}
+
+
+/* COUNT */
+
+.results-count {
+  margin-bottom: 15px;
+
+  color: #9ca3af;
+}
+
+
+/* TRIP CARD */
+
+.trip-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.trip-card {
+  background: #111827;
+
+  border: 1px solid #1f2937;
+
+  border-radius: 15px;
+
+  padding: 25px;
+
+  display: grid;
+
+  grid-template-columns:
+    1.2fr
+    2fr
+    1fr
+    auto;
+
+  align-items: center;
+
+  gap: 25px;
+}
+
+.trip-card:hover {
+  border-color: #4b5563;
+}
+
+
+/* BUS */
+
+.bus-info {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+}
+
+.bus-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #1f2937;
+
+  border-radius: 12px;
+
+  font-size: 25px;
+}
+
+.bus-info h2 {
+  margin: 0 0 5px;
+
+  font-size: 18px;
+}
+
+.bus-info p {
+  margin: 0;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+}
+
+
+/* ROUTE */
+
+.trip-route {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.time-block {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 70px;
+}
+
+.time-block strong {
+  font-size: 20px;
+}
+
+.time-block span {
+  color: #9ca3af;
+
+  font-size: 12px;
+
+  margin-top: 5px;
+}
+
+
+.route-line {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  flex: 1;
+
+  color: #9ca3af;
+}
+
+.route-line div {
+  height: 1px;
+
+  background: #374151;
+
+  flex: 1;
+}
+
+
+/* FARE */
+
+.fare-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.fare-info span {
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+.fare-info strong {
+  font-size: 22px;
+
+  margin: 5px 0;
+}
+
+.fare-info .seats {
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+
+/* BUTTON */
+
+.select-button {
+  background: white;
+  color: #111827;
+
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 8px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.select-button:hover {
+  background: #e5e7eb;
+}
+
+.select-button:disabled {
+  background: #374151;
+
+  color: #9ca3af;
+
+  cursor: not-allowed;
+}
+
+
+/* STATUS */
+
+.status-box {
+  background: #111827;
+
+  border: 1px solid #1f2937;
+
+  border-radius: 15px;
+
+  text-align: center;
+
+  padding: 70px 20px;
+}
+
+.status-icon {
+  font-size: 45px;
+
+  margin-bottom: 15px;
+}
+
+.status-box h3 {
+  font-size: 22px;
+
+  margin-bottom: 8px;
+}
+
+.status-box p {
+  color: #9ca3af;
+}
+
+.status-box button {
+  margin-top: 15px;
+
+  padding: 11px 20px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+
+/* LOADER */
+
+.loader {
+  width: 35px;
+  height: 35px;
+
+  border: 3px solid #374151;
+
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  margin: 0 auto 20px;
+
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+  .trip-card {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .results-navbar {
+    padding: 0 20px;
+  }
+
+  .results-container {
+    padding: 35px 20px;
+  }
+
+  .results-heading h1 {
+    font-size: 28px;
+  }
+
+  .trip-card {
+    grid-template-columns: 1fr;
+  }
+
+  .trip-route {
+    margin: 10px 0;
+  }
+
+  .select-button {
+    width: 100%;
+  }
+
+}

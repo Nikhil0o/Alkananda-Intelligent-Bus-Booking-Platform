@@ -24,13 +24,17 @@ public class Booking {
     @JoinColumn(name = "seat_id", nullable = false)
     private Seat seat;
 
+    @ManyToOne
+    @JoinColumn(name = "bus_id")
+    private Bus bus;
+
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
     private LocalDateTime bookingTime;
 
     private double amount;
-
+    private String BusNumber;
     public Booking() {
     }
 
@@ -62,6 +66,18 @@ public class Booking {
         return status;
     }
 
+    public String getBusNumber() {
+        return BusNumber;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -83,5 +99,9 @@ public class Booking {
     }
     public void setStatus(BookingStatus status){
         this.status=status;
+    }
+
+    public void setBusNumber(String busNumber) {
+        BusNumber = busNumber;
     }
 }

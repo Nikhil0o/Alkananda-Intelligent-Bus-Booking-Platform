@@ -1,5 +1,7 @@
 package com.example.alkananda.dto;
 
+import com.example.alkananda.entity.Bus;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,6 +27,7 @@ public class BookingResponse {
     private double amount;
 
     private LocalDateTime bookingTime;
+    private Bus bus;
 
     public Long getBookingId() {
         return bookingId;
@@ -64,6 +67,14 @@ public class BookingResponse {
 
     public LocalDateTime getBookingTime() {
         return bookingTime;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public void setBus(Bus bus) {
+        this.bus = bus;
     }
 
     public void setBookingId(Long bookingId) {

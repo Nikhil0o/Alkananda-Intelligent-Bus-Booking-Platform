@@ -20,8 +20,9 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @GetMapping("/admin-test")
-    public String adminTest() {
-        return "Welcome Admin";
+    @GetMapping("/{userId}")
+    public User getUserById(@PathVariable Long userId) {
+        return userService.getUserById(userId);
     }
+
 }

@@ -2,6 +2,7 @@ package com.example.alkananda.service;
 
 import com.example.alkananda.entity.User;
 
+import com.example.alkananda.exception.ResourceNotFoundException;
 import com.example.alkananda.repository.userRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,13 @@ public class UserService {
         String encodedPassword=passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         return userRepository.save(user);
+    }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User not found")
+                );
     }
 
 }

@@ -1,9 +1,11 @@
 package com.example.alkananda.dto;
 
 import com.example.alkananda.entity.BookingStatus;
+import com.example.alkananda.entity.Bus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class BookingSummary {
 
@@ -14,9 +16,11 @@ public class BookingSummary {
     private String destination;
 
     private LocalDate travelDate;
-
+    private Bus bus;
     private double amount;
-
+    private String busNumber;
+    private LocalTime departureTime;
+    private LocalTime arrivalTime;
     private BookingStatus status;
 
     private LocalDateTime bookingTime;
@@ -53,6 +57,26 @@ public class BookingSummary {
         return bookingTime;
     }
 
+    public Bus getBus() {
+        return bus;
+    }
+
+    public LocalTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public LocalTime getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setBus(Bus bus) {
+        this.bus = bus;
+    }
+
+    public void setArrivalTime(LocalTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
     public void setBookingId(Long bookingId) {
         this.bookingId = bookingId;
     }
@@ -83,5 +107,19 @@ public class BookingSummary {
 
     public void setBookingTime(LocalDateTime bookingTime) {
         this.bookingTime = bookingTime;
+    }
+
+    public void setBusNumber(String busNumber) {
+        this.busNumber = busNumber;
+    }
+
+    public String getBusNumber() {
+        return busNumber;
+    }
+
+
+
+    public void setDepartureTime(LocalTime departureTime) {
+        this.departureTime = departureTime;
     }
 }

@@ -1,0 +1,125 @@
+.search-card {
+  background: #111827;
+
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+
+  padding: 28px;
+
+  margin-bottom: 35px;
+}
+
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 25px;
+}
+
+.search-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.route-icon {
+  font-size: 25px;
+  color: #9ca3af;
+}
+
+.search-fields {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr
+    1fr
+    auto;
+
+  gap: 15px;
+
+  align-items: end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.field label {
+  font-size: 11px;
+
+  color: #9ca3af;
+
+  letter-spacing: 1px;
+}
+
+.field input {
+  height: 48px;
+
+  background: #0b0f19;
+
+  border: 1px solid #374151;
+
+  border-radius: 8px;
+
+  padding: 0 14px;
+
+  color: #ffffff;
+
+  outline: none;
+}
+
+.field input:focus {
+  border-color: #6b7280;
+}
+
+.field input::placeholder {
+  color: #6b7280;
+}
+
+.search-button {
+  height: 48px;
+
+  padding: 0 25px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background: #e5e7eb;
+}
+
+
+@media (max-width: 900px) {
+
+  .search-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .search-fields {
+    grid-template-columns: 1fr;
+  }
+
+}
