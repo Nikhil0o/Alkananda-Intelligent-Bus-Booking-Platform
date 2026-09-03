@@ -237,3 +237,34 @@ The frontend is built using:
              │
              ▼
        Booking Success
+---
+###Authentication Flow
+```text
+User Login
+     │
+     ▼
+Spring Security
+     │
+     ▼
+AuthenticationManager
+     │
+     ▼
+User Verification
+     │
+     ▼
+BCrypt Password Validation
+     │
+     ▼
+JWT Token Generation
+     │
+     ▼
+Frontend Stores JWT
+     │
+     ▼
+JWT Authentication Filter
+     │
+     ▼
+SecurityContext
+     │
+     ▼
+Protected REST APIs
