@@ -237,9 +237,13 @@ The frontend is built using:
              │
              ▼
        Booking Success
+
 ---
+
 ###Authentication Flow
+
 ```text
+
 User Login
      │
      ▼
