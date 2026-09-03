@@ -300,3 +300,331 @@ Alkananda uses Spring Security, BCrypt, and JWT for secure authentication and au
                           │
                           ▼
                      Database
+ ---
+
+#🏗️ System Architecture
+
+                         ┌─────────────────────────────┐
+                         │       React Frontend        │
+                         │                             │
+                         │  Login                      │
+                         │  Registration               │
+                         │  Dashboard                  │
+                         │  Trip Search                │
+                         │  Search Results             │
+                         │  Seat Selection             │
+                         │  Booking Confirmation       │
+                         │  My Bookings                │
+                         │  User Profile               │
+                         └──────────────┬──────────────┘
+                                        │
+                                        │ REST API
+                                        │ HTTP/JSON
+                                        ▼
+                         ┌─────────────────────────────┐
+                         │      Spring Boot Backend    │
+                         │                             │
+                         │  Controllers                │
+                         │  Services                   │
+                         │  Repositories               │
+                         │  DTOs                       │
+                         │  Spring Security            │
+                         │  JWT Authentication         │
+                         └──────────────┬──────────────┘
+                                        │
+                                        │ JPA / Hibernate
+                                        ▼
+                         ┌─────────────────────────────┐
+                         │       MySQL Database        │
+                         │                             │
+                         │  Users                      │
+                         │  Buses                      │
+                         │  Routes                     │
+                         │  Trips                      │
+                         │  Seats                      │
+                         │  Bookings                   │
+                         └──────────────┬──────────────┘
+                                        │
+                         ┌──────────────┴──────────────┐
+                         │                             │
+                         ▼                             ▼
+              ┌─────────────────────┐       ┌─────────────────────┐
+              │  Analytics Service  │       │   AI / ML Layer     │
+              │                     │       │                     │
+              │  Python             │       │  Machine Learning   │
+              │  FastAPI            │       │  AI Assistance      │
+              │  Pandas             │       │  Predictions        │
+              └─────────────────────┘       └─────────────────────┘
+
+---
+#🏛️ Backend Architecture
+
+Alkananda follows a layered architecture to separate API handling, business logic, data access, and database operations.
+
+                    ┌─────────────────┐
+                    │   Controller    │
+                    │                 │
+                    │ REST API Layer  │
+                    └────────┬────────┘
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │     Service     │
+                    │                 │
+                    │ Business Logic  │
+                    └────────┬────────┘
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │   Repository    │
+                    │                 │
+                    │ Data Access     │
+                    └────────┬────────┘
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │ MySQL Database  │
+                    └─────────────────┘
+
+---
+#🚌 Main Entities
+
+The main entities of the Alkananda system are:
+
+User
+ │
+ └──────────────► Booking
+                       │
+                       ├────────► Trip
+                       │            │
+                       │            ├────────► Bus
+                       │            │
+                       │            └────────► Route
+                       │
+                       └────────► Seat
+
+---
+#🔄 Bus & Route Master Data Design
+
+Bus and Route are designed as reusable master data.
+                  ┌───────────────┐
+                  │      Bus      │
+                  │ Master Data   │
+                  └───────┬───────┘
+                          │
+                          │
+                          ▼
+                     ┌─────────┐
+                     │  Trip   │
+                     └────┬────┘
+                          │
+                          │
+                          ▼
+                  ┌───────────────┐
+                  │     Route     │
+                  │ Master Data   │
+                  └───────────────┘
+
+#🎫 Booking Flow
+
+                    User
+                     │
+                     ▼
+                Search Trip
+                     │
+                     ▼
+               Select Trip
+                     │
+                     ▼
+              Load Trip Seats
+                     │
+                     ▼
+           Check Seat Availability
+                     │
+                     ▼
+             Select Available Seat
+                     │
+                     ▼
+             Booking Confirmation
+                     │
+                     ▼
+               JWT Validation
+                     │
+                     ▼
+               Booking API
+                     │
+                     ▼
+              Validate User
+                     │
+                     ▼
+              Validate Trip
+                     │
+                     ▼
+              Validate Seat
+                     │
+                     ▼
+             Mark Seat BOOKED
+                     │
+                     ▼
+               Create Booking
+                     │
+                     ▼
+             Booking Confirmation
+
+---
+
+#💺 Seat Management Architecture
+Trip
+ │
+ ├── Seat 1 → AVAILABLE
+ ├── Seat 2 → BOOKED
+ ├── Seat 3 → AVAILABLE
+ ├── Seat 4 → BOOKED
+ └── Seat 5 → AVAILABLE
+
+---
+
+#Analytics Architecture
+Analytics is implemented as a separate service so that data processing does not directly interfere with the core booking application.
+                   MySQL Database
+                         │
+                         │ Booking Data
+                         ▼
+                ┌──────────────────┐
+                │ Analytics Service│
+                └────────┬─────────┘
+                         │
+                         ▼
+                      FastAPI
+                         │
+                         ▼
+                       Python
+                         │
+                         ▼
+                      Pandas
+                         │
+              ┌──────────┼──────────┐
+              │          │          │
+              ▼          ▼          ▼
+           Revenue    Bookings    Routes
+           Analysis    Trends     Analysis
+
+---
+
+#🤖 Intelligent Features
+
+Alkananda is designed to extend beyond basic ticket booking by adding Machine Learning and AI capabilities.
+
+Machine Learning Architecture
+                Historical Booking Data
+                         │
+                         ▼
+                    MySQL Data
+                         │
+                         ▼
+                  Python / Pandas
+                         │
+                         ▼
+                  Data Processing
+                         │
+                         ▼
+                 Machine Learning
+                         │
+              ┌──────────┼──────────┐
+              │          │          │
+              ▼          ▼          ▼
+           Demand     Occupancy   Route
+         Prediction   Prediction  Analysis
+
+---
+
+#🧠 AI Assistance Architecture
+
+                         User
+                          │
+                          │ Natural Language Query
+                          ▼
+                    AI Assistant
+                          │
+                          ▼
+                  Request Processing
+                          │
+                          ▼
+                 Travel Information
+                          │
+              ┌──────────┼──────────┐
+              │          │          │
+              ▼          ▼          ▼
+           Search       Trips       Booking
+           Service      Service      Guidance
+
+---
+
+#🗃️ Database Architecture
+
+                         ┌─────────────┐
+                         │    User     │
+                         └──────┬──────┘
+                                │
+                                │
+                                ▼
+                         ┌─────────────┐
+                         │   Booking   │
+                         └──────┬──────┘
+                                │
+                  ┌─────────────┼─────────────┐
+                  │             │             │
+                  ▼             ▼             ▼
+              ┌──────┐      ┌──────┐      ┌──────┐
+              │ Trip │      │ Seat │      │ Bus  │
+              └──┬───┘      └──────┘      └──────┘
+                 │
+                 ▼
+              ┌───────┐
+              │ Route │
+              └───────┘
+
+#🔄 Complete End-to-End Architecture
+
+                              USER
+                                │
+                                ▼
+                       ┌────────────────┐
+                       │ React Frontend │
+                       └───────┬────────┘
+                               │
+                               │ REST API
+                               ▼
+                    ┌──────────────────────┐
+                    │ Spring Boot Backend  │
+                    │                      │
+                    │ Spring Security      │
+                    │ JWT                  │
+                    │ Controllers          │
+                    │ Services             │
+                    │ Repositories         │
+                    └──────────┬───────────┘
+                               │
+                               │ JPA / Hibernate
+                               ▼
+                     ┌───────────────────┐
+                     │  MySQL Database   │
+                     │                   │
+                     │ Users             │
+                     │ Buses             │
+                     │ Routes            │
+                     │ Trips             │
+                     │ Seats             │
+                     │ Bookings          │
+                     └─────────┬─────────┘
+                               │
+                  ┌────────────┴────────────┐
+                  │                         │
+                  ▼                         ▼
+        ┌──────────────────┐       ┌──────────────────┐
+        │ Analytics Service│       │ AI / ML Service  │
+        │                  │       │                  │
+        │ Python           │       │ Machine Learning │
+        │ FastAPI          │       │ AI Assistance    │
+        │ Pandas           │       │ Predictions      │
+        └──────────────────┘       └──────────────────┘
